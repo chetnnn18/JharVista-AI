@@ -1,164 +1,171 @@
-# DPI Engine - Java Deep Packet Inspection System
+# JharYatra AI
 
-This project is a Java implementation of the original DPI Engine. It keeps the same architecture and processing flow:
+A production-ready MERN stack web application — a smart digital platform to promote eco & cultural tourism in Jharkhand.
 
-```text
-PCAP Reader -> Load Balancer threads -> Fast Path threads -> Output Writer
-```
+![JharYatra AI](https://img.shields.io/badge/Stack-MERN-green)
+![License](https://img.shields.io/badge/License-MIT-blue)
 
-The engine reads packets from an input `.pcap`, parses Ethernet/IPv4/TCP/UDP headers, extracts TLS SNI, HTTP Host headers, and DNS queries, tracks flows, applies blocking rules, and writes forwarded packets to an output `.pcap`.
+## Features
+
+- **Modern Gen-Z UI** — Glassmorphism, gradients, Framer Motion animations, dark mode
+- **Homepage** — Hero collage, explore experiences, pride section, hidden gems, reels, AI trip planner, popular places, districts
+- **AI Trip Planner** — Google Gemini API with intelligent fallback itineraries
+- **User Roles** — Tourist, Explorer, Admin with protected routes
+- **Explorer Features** — Submit hidden places & Instagram reels
+- **Admin Dashboard** — Approve content, manage users, analytics
+- **JWT Auth** — Secure registration & login
+- **Cloudinary** — Image uploads for places & reels
+- **Sample Seed Data** — Jharkhand tourism places, districts, reels
+
+## Tech Stack
+
+| Layer | Technologies |
+|-------|-------------|
+| Frontend | React (Vite), Tailwind CSS, React Router, Axios, Framer Motion, React Icons |
+| Backend | Node.js, Express.js, MongoDB Atlas, JWT, Multer, Cloudinary |
+| AI | Google Gemini API |
 
 ## Project Structure
 
-```text
-packet_analyzer/
-├── pom.xml
-├── src/main/java/com/packetanalyzer/pcap/
-│   ├── PcapReader.java
-│   ├── PcapGlobalHeader.java
-│   ├── PcapPacketHeader.java
-│   ├── RawPacket.java
-│   ├── ParsedPacket.java
-│   └── PacketParser.java
-├── src/main/java/com/packetanalyzer/dpi/
-│   ├── Main.java
-│   ├── DPIEngine.java
-│   ├── LoadBalancer.java
-│   ├── LBManager.java
-│   ├── FastPathProcessor.java
-│   ├── FPManager.java
-│   ├── ConnectionTracker.java
-│   ├── GlobalConnectionTable.java
-│   ├── RuleManager.java
-│   ├── SNIExtractor.java
-│   ├── HTTPHostExtractor.java
-│   ├── DNSExtractor.java
-│   ├── QUICSNIExtractor.java
-│   ├── FiveTuple.java
-│   ├── PacketJob.java
-│   └── supporting enums/types
-├── generate_test_pcap.py
-├── test_dpi.pcap
-└── output.pcap
+```
+JharAI/
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── api/           # Axios instance
+│   │   ├── components/    # UI, layout, home sections
+│   │   ├── context/       # Auth & Theme
+│   │   ├── pages/         # Route pages
+│   │   └── routes/        # Protected routes
+│   └── package.json
+├── server/                 # Express backend
+│   ├── config/            # DB & Cloudinary
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── seed/              # Sample Jharkhand data
+│   └── server.js
+└── README.md
 ```
 
-## Prerequisites
+## Quick Start
 
-- Java 17 or newer
-- Apache Maven 3.8 or newer
+### Prerequisites
 
-No third-party Java libraries are required.
+- Node.js 18+
+- MongoDB Atlas account (or local MongoDB)
+- (Optional) Cloudinary account for image uploads
+- (Optional) Google Gemini API key for AI trip planning
 
-## Build
-
-Build the Java project with Maven:
+### 1. Clone & Install
 
 ```bash
-mvn clean package
+cd JharAI
+
+# Backend
+cd server
+npm install
+cp .env.example .env
+# Edit .env with your credentials
+
+# Frontend
+cd ../client
+npm install
+cp .env.example .env
 ```
 
-The executable JAR is created at:
+### 2. Configure Environment
 
-```text
-target/dpi-engine-1.0.0.jar
+**server/.env**
+
+```env
+PORT=5000
+MONGO_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/jharyatra
+JWT_SECRET=your_super_secret_jwt_key
+CLIENT_URL=http://localhost:5173
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
-## Run
+**client/.env**
 
-Basic usage:
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+### 3. Seed Database
 
 ```bash
-java -jar target/dpi-engine-1.0.0.jar test_dpi.pcap filtered.pcap
+cd server
+npm run seed
 ```
 
-With blocking rules:
+### 4. Run Development
 
 ```bash
-java -jar target/dpi-engine-1.0.0.jar test_dpi.pcap filtered.pcap \
-  --block-app YouTube \
-  --block-app TikTok \
-  --block-ip 192.168.1.50 \
-  --block-domain facebook
+# Terminal 1 - Backend
+cd server
+npm run dev
+
+# Terminal 2 - Frontend
+cd client
+npm run dev
 ```
 
-Configure the multi-threaded pipeline:
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:5000/api
+
+## Demo Accounts (after seeding)
+
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@jharyatra.ai | admin123 |
+| Explorer | explorer@jharyatra.ai | explorer123 |
+| Tourist | tourist@jharyatra.ai | tourist123 |
+
+## API Routes
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Register user |
+| POST | `/api/auth/login` | Login user |
+| GET | `/api/auth/me` | Get current user |
+| GET | `/api/places` | List places |
+| GET | `/api/places/:id` | Place details |
+| POST | `/api/places` | Create place (explorer) |
+| GET | `/api/districts` | List districts |
+| GET | `/api/reels` | List reels |
+| POST | `/api/reels` | Create reel (explorer) |
+| POST | `/api/trips/generate-trip` | AI trip planner |
+| POST | `/api/reviews` | Submit review |
+| GET | `/api/users/stats` | Admin analytics |
+
+## Color Palette
+
+| Token | Hex |
+|-------|-----|
+| Primary | `#166534` |
+| Secondary | `#22c55e` |
+| Background | `#f8fafc` |
+| Dark Section | `#0f172a` |
+| Accent | `#f59e0b` |
+
+## Production Build
 
 ```bash
-java -jar target/dpi-engine-1.0.0.jar input.pcap output.pcap --lbs 4 --fps 4
+# Frontend
+cd client
+npm run build
+
+# Backend
+cd server
+NODE_ENV=production npm start
 ```
 
-This creates 4 load balancer threads and 16 fast path threads.
+Serve `client/dist` via Nginx or Vercel/Netlify, and deploy the Express API to Render, Railway, or similar.
 
-Load rules from a file:
+## License
 
-```bash
-java -jar target/dpi-engine-1.0.0.jar input.pcap output.pcap --rules blocking_rules.txt
-```
-
-## Optional Utility Entry Points
-
-Packet analyzer view:
-
-```bash
-java -cp target/dpi-engine-1.0.0.jar com.packetanalyzer.dpi.PacketAnalyzerMain test_dpi.pcap 10
-```
-
-Simple SNI scan:
-
-```bash
-java -cp target/dpi-engine-1.0.0.jar com.packetanalyzer.dpi.SimpleMain test_dpi.pcap
-```
-
-## Creating Test Data
-
-The existing Python generator is unchanged:
-
-```bash
-python generate_test_pcap.py
-```
-
-It creates `test_dpi.pcap` with sample traffic for the Java DPI engine.
-
-## Supported Blocking Options
-
-```text
---block-ip <ip>        Block packets from a source IP
---block-app <app>      Block an application detected from SNI/Host
---block-domain <dom>   Block a domain or wildcard domain pattern
---rules <file>         Load blocking rules from a file
---lbs <n>              Number of load balancer threads
---fps <n>              Fast path threads per load balancer
---verbose              Enable verbose output
-```
-
-Supported app names include:
-
-```text
-Google, YouTube, Facebook, Instagram, Twitter/X, Netflix, Amazon,
-Microsoft, Apple, WhatsApp, Telegram, TikTok, Spotify, Zoom,
-Discord, GitHub, Cloudflare
-```
-
-## Processing Flow
-
-1. `PcapReader` opens the input file and reads the global PCAP header.
-2. `PacketParser` parses Ethernet, IPv4, TCP, and UDP headers.
-3. The reader creates a `PacketJob` with the five-tuple and payload offsets.
-4. `LBManager` hashes the five-tuple to select a load balancer.
-5. Each `LoadBalancer` hashes the same five-tuple to select a fast path processor.
-6. `FastPathProcessor` tracks the flow, extracts SNI/Host/DNS information, classifies the application, checks `RuleManager`, and forwards or drops the packet.
-7. The output writer writes forwarded packets to the output PCAP.
-
-## Output
-
-At the end of processing, the engine prints:
-
-- Packet totals
-- Forwarded and dropped packet counts
-- Load balancer and fast path statistics
-- Active connection counts
-- Configured blocking rule counts
-- Application classification breakdown
-- Detected domains/SNIs
-
-The output PCAP contains only forwarded packets.
+MIT — Built with love for Jharkhand.
