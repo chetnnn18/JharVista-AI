@@ -1,8 +1,8 @@
-# JharYatra AI
+# JharVista-AI
 
 A production-ready MERN stack web application — a smart digital platform to promote eco & cultural tourism in Jharkhand.
 
-![JharYatra AI](https://img.shields.io/badge/Stack-MERN-green)
+![JharVista-AI](https://img.shields.io/badge/Stack-MERN-green)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 ## Features
