@@ -1,171 +1,171 @@
 # JharVista-AI
 
-A production-ready MERN stack web application — a smart digital platform to promote eco & cultural tourism in Jharkhand.
+A production-ready MERN stack web application designed to promote eco-tourism, cultural heritage, and travel experiences across Jharkhand through a modern digital platform.
 
-![JharVista-AI](https://img.shields.io/badge/Stack-MERN-green)
+![Stack](https://img.shields.io/badge/Stack-MERN-green)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 ## Features
 
-- **Modern Gen-Z UI** — Glassmorphism, gradients, Framer Motion animations, dark mode
-- **Homepage** — Hero collage, explore experiences, pride section, hidden gems, reels, AI trip planner, popular places, districts
-- **AI Trip Planner** — Google Gemini API with intelligent fallback itineraries
-- **User Roles** — Tourist, Explorer, Admin with protected routes
-- **Explorer Features** — Submit hidden places & Instagram reels
-- **Admin Dashboard** — Approve content, manage users, analytics
-- **JWT Auth** — Secure registration & login
-- **Cloudinary** — Image uploads for places & reels
-- **Sample Seed Data** — Jharkhand tourism places, districts, reels
+* Modern and responsive UI with glassmorphism design
+* Explore popular tourist destinations across Jharkhand
+* Discover hidden gems and local attractions
+* Smart travel planning experience
+* Tourist, Explorer, and Admin user roles
+* Explorer portal for submitting destinations and travel content
+* Admin dashboard for content management and analytics
+* Cloudinary integration for image uploads
+* MongoDB-powered data management
+* Mobile-friendly responsive interface
 
 ## Tech Stack
 
-| Layer | Technologies |
-|-------|-------------|
-| Frontend | React (Vite), Tailwind CSS, React Router, Axios, Framer Motion, React Icons |
-| Backend | Node.js, Express.js, MongoDB Atlas, JWT, Multer, Cloudinary |
-| AI | Google Gemini API |
+| Layer      | Technologies                                                  |
+| ---------- | ------------------------------------------------------------- |
+| Frontend   | React, Vite, Tailwind CSS, React Router, Axios, Framer Motion |
+| Backend    | Node.js, Express.js                                           |
+| Database   | MongoDB Atlas                                                 |
+| Storage    | Cloudinary                                                    |
+| Deployment | Vercel / Render (Optional)                                    |
+
+---
 
 ## Project Structure
 
-```
-JharAI/
-├── client/                 # React frontend
+```text
+JharVista-AI/
+├── client/
 │   ├── src/
-│   │   ├── api/           # Axios instance
-│   │   ├── components/    # UI, layout, home sections
-│   │   ├── context/       # Auth & Theme
-│   │   ├── pages/         # Route pages
-│   │   └── routes/        # Protected routes
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   └── routes/
 │   └── package.json
-├── server/                 # Express backend
-│   ├── config/            # DB & Cloudinary
+│
+├── server/
+│   ├── config/
 │   ├── controllers/
 │   ├── middleware/
 │   ├── models/
 │   ├── routes/
-│   ├── seed/              # Sample Jharkhand data
+│   ├── seed/
 │   └── server.js
+│
 └── README.md
 ```
 
-## Quick Start
+## Installation
 
 ### Prerequisites
 
-- Node.js 18+
-- MongoDB Atlas account (or local MongoDB)
-- (Optional) Cloudinary account for image uploads
-- (Optional) Google Gemini API key for AI trip planning
+* Node.js 18+
+* MongoDB Atlas or Local MongoDB
+* Cloudinary Account (Optional)
 
-### 1. Clone & Install
+### Clone Repository
 
 ```bash
-cd JharAI
-
-# Backend
-cd server
-npm install
-cp .env.example .env
-# Edit .env with your credentials
-
-# Frontend
-cd ../client
-npm install
-cp .env.example .env
+git clone https://github.com/chetnnn18/JharVista-AI.git
+cd JharVista-AI
 ```
 
-### 2. Configure Environment
+### Backend Setup
 
-**server/.env**
+```bash
+cd server
+npm install
+```
+
+### Frontend Setup
+
+```bash
+cd ../client
+npm install
+```
+
+---
+
+## Environment Variables
+
+### Server (.env)
 
 ```env
 PORT=5000
-MONGO_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/jharyatra
-JWT_SECRET=your_super_secret_jwt_key
+MONGO_URI=your_mongodb_connection_string
 CLIENT_URL=http://localhost:5173
+
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-GEMINI_API_KEY=your_gemini_api_key
 ```
 
-**client/.env**
+### Client (.env)
 
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-### 3. Seed Database
+---
+
+## Running the Project
+
+### Start Backend
 
 ```bash
-cd server
-npm run seed
-```
-
-### 4. Run Development
-
-```bash
-# Terminal 1 - Backend
 cd server
 npm run dev
+```
 
-# Terminal 2 - Frontend
+### Start Frontend
+
+```bash
 cd client
 npm run dev
 ```
 
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:5000/api
+Frontend:
+http://localhost:5173
 
-## Demo Accounts (after seeding)
+Backend:
+http://localhost:5000
 
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | admin@jharyatra.ai | admin123 |
-| Explorer | explorer@jharyatra.ai | explorer123 |
-| Tourist | tourist@jharyatra.ai | tourist123 |
+---
 
-## API Routes
+## User Roles
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | Register user |
-| POST | `/api/auth/login` | Login user |
-| GET | `/api/auth/me` | Get current user |
-| GET | `/api/places` | List places |
-| GET | `/api/places/:id` | Place details |
-| POST | `/api/places` | Create place (explorer) |
-| GET | `/api/districts` | List districts |
-| GET | `/api/reels` | List reels |
-| POST | `/api/reels` | Create reel (explorer) |
-| POST | `/api/trips/generate-trip` | AI trip planner |
-| POST | `/api/reviews` | Submit review |
-| GET | `/api/users/stats` | Admin analytics |
+### Tourist
 
-## Color Palette
+* Browse destinations
+* View travel information
+* Explore attractions
 
-| Token | Hex |
-|-------|-----|
-| Primary | `#166534` |
-| Secondary | `#22c55e` |
-| Background | `#f8fafc` |
-| Dark Section | `#0f172a` |
-| Accent | `#f59e0b` |
+### Explorer
 
-## Production Build
+* Submit hidden destinations
+* Share travel content
+* Contribute community discoveries
 
-```bash
-# Frontend
-cd client
-npm run build
+### Admin
 
-# Backend
-cd server
-NODE_ENV=production npm start
-```
+* Manage platform content
+* Review submissions
+* Monitor platform activity
 
-Serve `client/dist` via Nginx or Vercel/Netlify, and deploy the Express API to Render, Railway, or similar.
+---
+
+## Future Enhancements
+
+* Interactive maps integration
+* Hotel and transport recommendations
+* Event discovery system
+* Personalized travel itineraries
+* Multi-language support
+
+---
 
 ## License
 
-MIT — Built with love for Jharkhand.
+MIT License
+
+Built with ❤️ for promoting tourism and cultural heritage across Jharkhand.
